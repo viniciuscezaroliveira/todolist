@@ -1,30 +1,31 @@
-import { NextRequest } from "next/server";
-import QueryString from "qs";
+import { todoListCreateController } from "@/backend/presentation/controllers/todolist/create.controller";
+import { getTodolistController } from "@/backend/presentation/controllers/todolist/get.controller";
+import { NextRequest, NextResponse } from "next/server";
 
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const payload = await todoListCreateController(body);
+    return Response.json({ payload });
+  } catch (error: any) {
+    return NextResponse.json(error, { status: 500 });
+  }
+}
 export async function GET(req: NextRequest) {
-  const query = queryToObject(req.nextUrl.search);
-  console.log({ query });
-  const filter = {};
-  //   for (const tmp of query) {
-  //   }
-  return Response.json({ ok: "ok" });
-}
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  console.log({ params });
-  return Response.json({ ok: "ok" });
+  try {
+    const filter = queryToObject(req.nextUrl.search);
+    const payload = await getTodolistController(filter);
+    return Response.json({ payload });
+  } catch (error: any) {
+    return NextResponse.json(error, { status: 500 });
+  }
 }
 
-export function queryToObject(query: string) {
-  const params = {};
+export function queryToObject(query: string): { [key: string]: string } {
+  const obj: { [key: string]: any } = {};
   const queryString = new URLSearchParams(query);
-  queryString.forEach((tmp, key) => {
-    console.log({ tmp, key });
+  queryString.forEach((value, key) => {
+    obj[key] = value;
   });
-
-  return QueryString.parse(query, {
-    ignoreQueryPrefix: true,
-  });
+  return obj;
 }

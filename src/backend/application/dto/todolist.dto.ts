@@ -1,4 +1,4 @@
-class TodoListDto {
+class TodoListDTO {
   constructor(
     public name: string,
     public description: string,
