@@ -2,19 +2,20 @@ import { todoListCreateController } from "@/backend/presentation/controllers/tod
 import { getTodolistController } from "@/backend/presentation/controllers/todolist/get.controller";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const body = await req.json();
-    const payload = await todoListCreateController(body);
+    const filter = queryToObject(req.nextUrl.search);
+    const payload = await getTodolistController(filter);
     return Response.json({ payload });
   } catch (error: any) {
     return NextResponse.json(error, { status: 500 });
   }
 }
-export async function GET(req: NextRequest) {
+
+export async function POST(req: NextRequest) {
   try {
-    const filter = queryToObject(req.nextUrl.search);
-    const payload = await getTodolistController(filter);
+    const body = await req.json();
+    const payload = await todoListCreateController(body);
     return Response.json({ payload });
   } catch (error: any) {
     return NextResponse.json(error, { status: 500 });

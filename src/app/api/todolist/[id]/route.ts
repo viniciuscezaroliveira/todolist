@@ -17,7 +17,7 @@ export async function DELETE(
 ) {
   try {
     await todoListDeleteController(params.id);
-    return NextResponse.json({ status: 204 });
+    return NextResponse.json({}, { status: 204 });
   } catch (error) {
     return NextResponse.json(error, { status: 500 });
   }
