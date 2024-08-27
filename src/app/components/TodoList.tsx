@@ -3,6 +3,7 @@
 import { TodoList as TodoListEntity } from "@/frontend/domain/todolist/TodoList";
 import { TodoListGateway } from "@/frontend/infra/gateway/TodoList.gateway";
 import { useEffect, useState } from "react";
+import { ConfirmDelete } from "./ConfirmDelete";
 import EditTodo from "./EditTodo";
 
 const todoListGateway = TodoListGateway.getInstance();
@@ -12,9 +13,10 @@ const TodoList = () => {
   const [input, setInput] = useState<string>("");
   const [openEdit, setOpenEdit] = useState<boolean>(false);
   const [editData, setEditData] = useState<{ [key: string]: string }>({});
+  const [deleteTodoId, setDeleteTodoId] = useState<string>("");
+  const [openDelete, setOpenDelete] = useState<boolean>(false);
 
   const load = async () => {
-    console.log(17);
     const todos = await todoListGateway.get({});
     setTodoList(todos);
   };
@@ -38,26 +40,36 @@ const TodoList = () => {
   };
 
   const toggleComplete = async (id: string) => {
-    const results = await todoListGateway.update(id, { completed: true });
-    setTodoList(results);
+    await todoListGateway.update(id, { completed: true });
+    await load();
   };
   const toggleNotComplete = async (id: string) => {
-    const results = await todoListGateway.update(id, { completed: false });
-    setTodoList(results);
+    await todoListGateway.update(id, { completed: false });
+    await load();
   };
 
   const deleteTodo = async (id: string) => {
     await todoListGateway.delete(id);
     const todos = await todoListGateway.get({});
     setTodoList(todos);
+    handleCloseDelete();
   };
 
   const handleCloseEdit = async () => {
     setOpenEdit(false);
     load();
   };
+
+  const handleConfirmationDelete = async (id: string) => {
+    setDeleteTodoId(id);
+    setOpenDelete(true);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+  };
+
   useEffect(() => {
-    console.log(60);
     load();
   }, []);
 
@@ -108,12 +120,14 @@ const TodoList = () => {
                     : "bg-green-500  hover:bg-green-600"
                 } 
                   `}
+              test-id="btn-completed"
             >
               {todo.completed ? "Not done" : "Done"}
             </button>
             <button
-              onClick={() => deleteTodo(todo.id!)}
+              onClick={() => handleConfirmationDelete(todo.id!)}
               className="bg-red-500 text-white p-1 rounded hover:bg-red-600 ml-2"
+              test-id="btn-delete"
             >
               Delete
             </button>
@@ -125,6 +139,14 @@ const TodoList = () => {
           id={editData.id}
           title={editData.title}
           onClose={handleCloseEdit}
+        />
+      )}
+      {openDelete && (
+        <ConfirmDelete
+          handleDelete={() => {
+            deleteTodo(deleteTodoId);
+          }}
+          handleClose={handleCloseDelete}
         />
       )}
     </div>

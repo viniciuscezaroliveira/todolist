@@ -1,5 +1,6 @@
 import { TodoListGateway } from "@/frontend/infra/gateway/TodoList.gateway";
 import { useState } from "react";
+import { Modal } from "./Modal";
 
 type Props = {
   id: string;
@@ -15,8 +16,7 @@ export default function EditTodo({ id, title, onClose }: Props) {
     }
   }
   return (
-    //max-w-md
-    <div className="absolute w-full top-0 left-0 right-0 ml-auto mr-auto container z-10 h-full backdrop-blur-md flex justify-center items-center">
+    <Modal>
       <div className="max-w-lg w-full h-1/3 bg-white border border-gray-200 rounded p-4">
         <h1>Edit To-do</h1>
         <div className="flex flex-col mb-4 gap-4 mt-2 ">
@@ -43,6 +43,6 @@ export default function EditTodo({ id, title, onClose }: Props) {
           </div>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
