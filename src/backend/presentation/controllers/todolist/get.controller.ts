@@ -7,6 +7,5 @@ export async function getTodolistController(
 ): Promise<Array<TodoListEntity>> {
   const todoListGetRepository = TodoListGetRepository.getInstance();
   const useCase = new TodoListGetUsecase(todoListGetRepository);
-  console.log({ filter });
   return await useCase.execute(filter);
 }

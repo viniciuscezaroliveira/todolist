@@ -8,7 +8,7 @@ export class TodoListGetUsecase {
     filter?: Partial<TodoListEntity>
   ): Promise<Array<TodoListEntity>> {
     const predicate = this.predicate(filter);
-    console.log({ predicate });
+
     const payload = await this.repository.execute(predicate);
     return payload;
   }
