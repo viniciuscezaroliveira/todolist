@@ -7,7 +7,7 @@ export async function POST(
 ) {
   try {
     const payload = await doneTodolistController(params.id);
-    return NextResponse.json({}, { status: 204 });
+    return NextResponse.json({}, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(error.message, { status: 500 });
   }

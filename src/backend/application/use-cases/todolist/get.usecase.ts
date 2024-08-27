@@ -5,14 +5,15 @@ export class TodoListGetUsecase {
   constructor(private repository: ITodoListGetRepository) {}
 
   async execute(
-    filter: Partial<TodoListEntity>
+    filter?: Partial<TodoListEntity>
   ): Promise<Array<TodoListEntity>> {
     const predicate = this.predicate(filter);
     const payload = await this.repository.execute(predicate);
     return payload;
   }
 
-  private predicate(filter: Partial<TodoListEntity>) {
+  private predicate(filter?: Partial<TodoListEntity>) {
+    if (!filter) return {};
     const { title, status } = filter;
     return {
       title: title || undefined,

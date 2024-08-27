@@ -5,7 +5,7 @@ import {
 import { ITodoListGetRepository } from "../../interfaces/repositories/todolist/IGet.interface";
 import { ITodoListUpdateRepository } from "../../interfaces/repositories/todolist/IUpdate.interface";
 
-export class TodoListUpdateUsecase {
+export class TodoListDoneUsecase {
   constructor(
     private todoListUpdateRepository: ITodoListUpdateRepository,
     private todoListGetRepository: ITodoListGetRepository
@@ -17,6 +17,7 @@ export class TodoListUpdateUsecase {
     });
     if (!todo?.length) throw new Error("todo not found");
     const [firstRegister] = todo;
+
     const entity = new TodoListEntity({
       description: firstRegister.description ?? "",
       title: firstRegister.title,

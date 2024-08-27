@@ -6,9 +6,13 @@ export async function PUT(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const body = await req.json();
-  const payload = await updateTodolistController(params.id, body);
-  return Response.json({ ok: "ok" });
+  try {
+    const body = await req.json();
+    const payload = await updateTodolistController(params.id, body);
+    return Response.json(payload);
+  } catch (error: any) {
+    return NextResponse.json(error.message, { status: 500 });
+  }
 }
 
 export async function DELETE(
@@ -17,8 +21,8 @@ export async function DELETE(
 ) {
   try {
     await todoListDeleteController(params.id);
-    return NextResponse.json({}, { status: 204 });
-  } catch (error) {
+    return NextResponse.json({}, { status: 200 });
+  } catch (error: any) {
     return NextResponse.json(error.message, { status: 500 });
   }
 }
