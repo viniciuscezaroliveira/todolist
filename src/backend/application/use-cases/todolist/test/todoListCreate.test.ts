@@ -1,7 +1,7 @@
 import { TodoListDTO } from "@/backend/application/dto/todolist.dto";
-import { TodoListCreateRepository } from "@/backend/infra/repositories/todolist/create.repository";
+import { TodoListCreateRepository } from "@/backend/infra/repositories/todolist/Create.repository";
 import { describe, expect, test } from "@jest/globals";
-import { TodoListCreateUsecase } from "../create.usecase";
+import { TodoListCreateUsecase } from "../Create.usecase";
 
 describe("TodoListCreateUsecase", () => {
   test("should be defined", async () => {

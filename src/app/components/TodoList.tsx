@@ -102,7 +102,10 @@ const TodoList = () => {
         />
         <button
           onClick={addTodo}
-          className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600"
+          className={`bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600 ${
+            !input.trim() ? "bg-gray-300 hover:bg-gray-300" : ""
+          }`}
+          disabled={!input.trim()}
         >
           Add
         </button>

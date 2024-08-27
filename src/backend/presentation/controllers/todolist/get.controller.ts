@@ -1,6 +1,6 @@
-import { TodoListGetUsecase } from "@/backend/application/use-cases/todolist/get.usecase";
+import { TodoListGetUsecase } from "@/backend/application/use-cases/todolist/Get.usecase";
 import { TodoListEntity } from "@/backend/domain/entities/todolist.entity";
-import { TodoListGetRepository } from "@/backend/infra/repositories/todolist/get.repository";
+import { TodoListGetRepository } from "@/backend/infra/repositories/todolist/Get.repository";
 
 export async function getTodolistController(
   filter: Partial<TodoListEntity>

@@ -1,8 +1,8 @@
-import { TodoListGetUsecase } from "@/backend/application/use-cases/todolist/get.usecase";
-import { TodoListUpdateUsecase } from "@/backend/application/use-cases/todolist/update.usecase";
+import { TodoListGetUsecase } from "@/backend/application/use-cases/todolist/Get.usecase";
+import { TodoListUpdateUsecase } from "@/backend/application/use-cases/todolist/Update.usecase";
 import { TodoListEntity } from "@/backend/domain/entities/todolist.entity";
-import { TodoListGetRepository } from "@/backend/infra/repositories/todolist/get.repository";
-import { TodoListUpdateRepository } from "@/backend/infra/repositories/todolist/update.repository";
+import { TodoListGetRepository } from "@/backend/infra/repositories/todolist/Get.repository";
+import { TodoListUpdateRepository } from "@/backend/infra/repositories/todolist/Update.repository";
 
 export const updateTodolistController = async (
   id: string,

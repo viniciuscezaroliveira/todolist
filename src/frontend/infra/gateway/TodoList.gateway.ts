@@ -1,4 +1,4 @@
-import { TodoList } from "../../domain/todolist/TodoList";
+import { TodoList } from "../../todolist/TodoList";
 import IHttpClient, { FetchAdapter } from "../http/HttpClient";
 
 export interface ITodoListGateway {
@@ -24,7 +24,7 @@ export class TodoListGateway implements ITodoListGateway {
     if (!filter) filter = {};
     Object.entries(filter).forEach(([key, value]) => {
       if (value === undefined) return;
-      searchParams.append(key, value.toString());
+      searchParams.append(`${key}`, `${value}`);
     });
 
     return await this.fetchAdapter.get(`/todolist?${searchParams.toString()}`);

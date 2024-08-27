@@ -1,9 +1,9 @@
 import { TodoListEntity } from "@/backend/domain/entities/todolist.entity";
-import { TodoListDeleteRepository } from "@/backend/infra/repositories/todolist/delete.repository";
-import { TodoListGetRepository } from "@/backend/infra/repositories/todolist/get.repository";
+import { TodoListDeleteRepository } from "@/backend/infra/repositories/todolist/Delete.repository";
+import { TodoListGetRepository } from "@/backend/infra/repositories/todolist/Get.repository";
 import { beforeAll, describe, expect, test } from "@jest/globals";
 import { PrismaClient } from "@prisma/client";
-import { TodoListDeleteUsecase } from "../delete.usecase";
+import { TodoListDeleteUsecase } from "../Delete.usecase";
 
 let db: PrismaClient;
 beforeAll(async () => {
