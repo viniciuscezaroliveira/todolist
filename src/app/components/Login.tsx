@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -15,8 +16,8 @@ export default function LoginFormComponent() {
     // Adicionar lógica de autenticação aqui
   };
 
-  const handleToSigin = () => {
-    router.push("/signin");
+  const handleToCreateAccount = () => {
+    router.push("/create-account");
   };
 
   return (
@@ -32,6 +33,7 @@ export default function LoginFormComponent() {
               Email
             </label>
             <input
+              autoFocus
               type="email"
               id="email"
               value={email}
@@ -55,24 +57,28 @@ export default function LoginFormComponent() {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
-            <div
-              className="absolute top-8 inset-y-0 right-0 pr-3 flex items-center cursor-pointer z-10 h-full"
-              onClick={togglePasswordVisibility}
-            ></div>
+            <div className="flex justify-end">
+              <Link
+                href={"/forgot"}
+                className="text-sm mt-1 hover:underline text-blue-600"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </div>
           <div className="flex items-center justify-between">
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
-              Login
+              Log in
             </button>
             <button
               type="submit"
               className="bg-transparent border border-gray-900 hover:bg-gray-700 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={handleToSigin}
+              onClick={handleToCreateAccount}
             >
-              Sign in
+              Create account
             </button>
           </div>
         </form>
