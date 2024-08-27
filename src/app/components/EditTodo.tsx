@@ -22,10 +22,12 @@ export default function EditTodo({ id, title, onClose }: Props) {
         <div className="flex flex-col mb-4 gap-4 mt-2 ">
           <input
             type="text"
+            autoFocus
             value={input}
             onChange={(e) => setInput(e.target.value)}
             className="flex-grow p-2 border border-gray-300 rounded-l"
             placeholder="Add new task"
+            onKeyDown={(e) => e.key === "Enter" && editTodo()}
           />
           <div className="flex justify-end items-end gap-2  mt-10">
             <button

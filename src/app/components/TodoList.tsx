@@ -83,6 +83,8 @@ const TodoList = () => {
           onChange={(e) => setInput(e.target.value)}
           className="flex-grow p-2 border border-gray-300 rounded-l"
           placeholder="Add new task"
+          onKeyDown={(e) => e.key === "Enter" && addTodo()}
+          autoFocus
         />
         <button
           onClick={addTodo}
