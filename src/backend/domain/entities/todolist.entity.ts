@@ -31,14 +31,14 @@ export class TodoListEntity {
 
   private validate() {
     const errors = [];
-    if (!this.title || !this.description) {
-      errors.push("title and description are required");
+    if (!this.title) {
+      errors.push("title is required");
     }
-    if (this.title.length < 1) {
-      errors.push("title must be at least 3 characters long");
+    if (this.title?.length < 1) {
+      errors.push("title must be at least 1 characters long");
     }
     if (this.description && this.description?.length < 1) {
-      errors.push("description must be at least 3 characters long");
+      errors.push("description must be at least 1 characters long");
     }
     if (Object.values(TodoListStatus).indexOf(this.status) === -1) {
       errors.push("status must be open or close");

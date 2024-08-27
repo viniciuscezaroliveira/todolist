@@ -15,9 +15,9 @@ export class TodoListGetRepository implements ITodoListGetRepository {
   async execute(filter: {
     [key: string]: any;
   }): Promise<Array<TodoListEntity>> {
-    const payload = await db.todolist.findMany({
-      where: filter,
+    const data = await db.todolist.findMany({
+      where: { ...filter, isDeleted: false },
     });
-    return payload as TodoListEntity[];
+    return data as TodoListEntity[];
   }
 }

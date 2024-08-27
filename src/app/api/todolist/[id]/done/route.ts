@@ -5,6 +5,10 @@ export async function POST(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const payload = await doneTodolistController(params.id);
-  return NextResponse.json({}, { status: 204 });
+  try {
+    const payload = await doneTodolistController(params.id);
+    return NextResponse.json({}, { status: 204 });
+  } catch (error: any) {
+    return NextResponse.json(error.message, { status: 500 });
+  }
 }

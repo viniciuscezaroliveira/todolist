@@ -6,9 +6,9 @@ export async function GET(req: NextRequest) {
   try {
     const filter = queryToObject(req.nextUrl.search);
     const payload = await getTodolistController(filter);
-    return Response.json({ payload });
+    return Response.json(payload);
   } catch (error: any) {
-    return NextResponse.json(error, { status: 500 });
+    return NextResponse.json(error.message, { status: 500 });
   }
 }
 
@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const payload = await todoListCreateController(body);
-    return Response.json({ payload });
+    return Response.json(payload);
   } catch (error: any) {
-    return NextResponse.json(error, { status: 500 });
+    return NextResponse.json(error.message, { status: 500 });
   }
 }
 

@@ -7,7 +7,16 @@ export class TodoListGetUsecase {
   async execute(
     filter: Partial<TodoListEntity>
   ): Promise<Array<TodoListEntity>> {
-    const payload = await this.repository.execute(filter);
+    const predicate = this.predicate(filter);
+    const payload = await this.repository.execute(predicate);
     return payload;
+  }
+
+  private predicate(filter: Partial<TodoListEntity>) {
+    const { title, status } = filter;
+    return {
+      title: title || undefined,
+      status: status ? Number(status) : undefined,
+    };
   }
 }
