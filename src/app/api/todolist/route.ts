@@ -5,6 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const filter = queryToObject(req.nextUrl.search);
+    if (filter.completed !== undefined) {
+      filter.completed = (filter.completed === "true") as any;
+    }
     const payload = await getTodolistController(filter);
     return Response.json(payload);
   } catch (error: any) {

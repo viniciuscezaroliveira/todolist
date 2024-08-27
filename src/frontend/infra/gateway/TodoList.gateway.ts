@@ -20,7 +20,14 @@ export class TodoListGateway implements ITodoListGateway {
   }
   constructor(private fetchAdapter: IHttpClient) {}
   async get(filter: Partial<TodoList>): Promise<Array<TodoList>> {
-    return await this.fetchAdapter.get("/todolist");
+    const searchParams = new URLSearchParams();
+    if (!filter) filter = {};
+    Object.entries(filter).forEach(([key, value]) => {
+      if (value === undefined) return;
+      searchParams.append(key, value.toString());
+    });
+
+    return await this.fetchAdapter.get(`/todolist?${searchParams.toString()}`);
   }
   async create(data: TodoList): Promise<TodoList> {
     return await this.fetchAdapter.post("/todolist", data);

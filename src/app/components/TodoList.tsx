@@ -5,6 +5,7 @@ import { TodoListGateway } from "@/frontend/infra/gateway/TodoList.gateway";
 import { useEffect, useState } from "react";
 import { ConfirmDelete } from "./ConfirmDelete";
 import EditTodo from "./EditTodo";
+import Filter from "./Filter";
 
 const todoListGateway = TodoListGateway.getInstance();
 
@@ -15,10 +16,19 @@ const TodoList = () => {
   const [editData, setEditData] = useState<{ [key: string]: string }>({});
   const [deleteTodoId, setDeleteTodoId] = useState<string>("");
   const [openDelete, setOpenDelete] = useState<boolean>(false);
+  const [filter, setFilter] = useState<boolean | undefined>(undefined);
 
-  const load = async () => {
-    const todos = await todoListGateway.get({});
-    setTodoList(todos);
+  const load = async (completed?: boolean) => {
+    completed = completed ?? filter;
+    await todoListGateway
+      .get({ completed })
+      .then((todos) => {
+        setTodoList(todos);
+      })
+      .catch((error) => {
+        console.error(error);
+        setTodoList([]);
+      });
   };
   const addTodo = async () => {
     if (input.trim()) {
@@ -26,7 +36,7 @@ const TodoList = () => {
         title: input,
         completed: false,
       });
-      setTodoList([...todoList, todo]);
+      load();
       setInput("");
     }
   };
@@ -69,9 +79,13 @@ const TodoList = () => {
     setOpenDelete(false);
   };
 
+  const handleLoadFilter = async (completed?: boolean) => {
+    setFilter(completed);
+  };
+
   useEffect(() => {
     load();
-  }, []);
+  }, [filter]);
 
   return (
     <div className="max-w-md mx-auto mt-10 p-2 ">
@@ -93,7 +107,12 @@ const TodoList = () => {
           Add
         </button>
       </div>
-      <ul className="list-none">
+      <Filter
+        getTodoList={(completed) => {
+          handleLoadFilter(completed);
+        }}
+      />
+      <ul className="mt-2">
         {todoList.map((todo, index) => (
           <li
             key={index}
