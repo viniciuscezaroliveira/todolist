@@ -1,7 +1,4 @@
-import {
-  TodoListEntity,
-  TodoListStatus,
-} from "@/backend/domain/entities/todolist.entity";
+import { TodoListEntity } from "@/backend/domain/entities/todolist.entity";
 import { ITodoListGetRepository } from "../../interfaces/repositories/todolist/IGet.interface";
 import { ITodoListUpdateRepository } from "../../interfaces/repositories/todolist/IUpdate.interface";
 
@@ -19,10 +16,9 @@ export class TodoListDoneUsecase {
     const [firstRegister] = todo;
 
     const entity = new TodoListEntity({
-      description: firstRegister.description ?? "",
       title: firstRegister.title,
       id: firstRegister.id,
-      status: TodoListStatus.close,
+      completed: true,
     });
     await this.todoListUpdateRepository.execute(id, entity);
   }

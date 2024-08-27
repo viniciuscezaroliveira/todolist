@@ -8,11 +8,10 @@ datasource db {
 }
 
 model Todolist {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  status      Int
-  isDeleted   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(uuid())
+  title     String
+  completed Boolean  @default(false)
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

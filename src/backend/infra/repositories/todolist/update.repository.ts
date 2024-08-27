@@ -19,8 +19,7 @@ export class TodoListUpdateRepository implements ITodoListUpdateRepository {
       },
       data: {
         title: data.title,
-        description: data.description,
-        status: data.status,
+        completed: data.completed,
       },
     });
   }

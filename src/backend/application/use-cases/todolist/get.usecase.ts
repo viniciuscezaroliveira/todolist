@@ -8,16 +8,17 @@ export class TodoListGetUsecase {
     filter?: Partial<TodoListEntity>
   ): Promise<Array<TodoListEntity>> {
     const predicate = this.predicate(filter);
+    console.log({ predicate });
     const payload = await this.repository.execute(predicate);
     return payload;
   }
 
   private predicate(filter?: Partial<TodoListEntity>) {
     if (!filter) return {};
-    const { title, status } = filter;
+    const { title, completed } = filter;
     return {
       title: title || undefined,
-      status: status ? Number(status) : undefined,
+      completed: completed || undefined,
     };
   }
 }

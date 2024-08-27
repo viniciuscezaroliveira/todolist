@@ -14,12 +14,11 @@ export class TodoListCreateRepository implements ITodoListCreateRepository {
   }
 
   async execute(data: TodoListEntity): Promise<TodoListEntity> {
-    const { title, description, status } = data;
+    const { title, completed } = data;
     const payload = await db.todolist.create({
       data: {
         title,
-        description: description ?? "",
-        status,
+        completed,
       },
     });
     return payload as TodoListEntity;
