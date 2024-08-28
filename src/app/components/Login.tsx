@@ -9,7 +9,7 @@ import { UserContext } from "../providers/userContext";
 const userGateway = UserGateway.getInstance();
 export default function LoginFormComponent() {
   const router = useRouter();
-  const { state, dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext)!;
 
   const handleToCreateAccount = () => {
     router.push("/create-account");
@@ -39,7 +39,7 @@ export default function LoginFormComponent() {
         type: "SET_USER",
         payload: user,
       });
-      router.push("/");
+      router.push("/todo-list");
     }
   };
 

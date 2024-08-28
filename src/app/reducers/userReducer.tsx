@@ -2,9 +2,7 @@ import { User } from "@/frontend/domain/user/User";
 
 // userReducer.tsx
 
-type Action =
-  | { type: "SET_USER"; payload: { id: string; name: string; email: string } }
-  | { type: "CLEAR_USER" };
+type Action = { type: "SET_USER"; payload: User } | { type: "CLEAR_USER" };
 
 export const initialState: User = {
   id: "",
