@@ -24,6 +24,7 @@ export default function CreateAccountFormComponent() {
     await userGateway
       .createAccount(data)
       .then(() => {
+        alert("Conta criada com sucesso.");
         gotoLoginPage();
       })
       .catch((error) => {

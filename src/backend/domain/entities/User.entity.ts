@@ -13,7 +13,7 @@ export class UserEntity {
     if (
       !this.name ||
       !/^[a-zA-ZÀ-ÿ\s]{3,}$/.test(this.name) ||
-      this.name.length > 20
+      this.name.length > 100
     ) {
       throw new Error("Valid name is required");
     }
