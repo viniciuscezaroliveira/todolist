@@ -3,14 +3,13 @@ import { setCookie } from "@/frontend/infra/cookies/set";
 import { UserGateway } from "@/frontend/infra/gateway/User.gateway";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { UserContext } from "../providers/userContext";
 const userGateway = UserGateway.getInstance();
 export default function LoginFormComponent() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const { state, dispatch } = useContext(UserContext);
 
   const handleToCreateAccount = () => {
     router.push("/create-account");
@@ -36,7 +35,11 @@ export default function LoginFormComponent() {
       date.setDate(date.getDate() + 1);
       setCookie(CONFIG.cookieTokenName!, token, date);
       const user = await userGateway.me();
-      // router.push("/");
+      dispatch({
+        type: "SET_USER",
+        payload: user,
+      });
+      router.push("/");
     }
   };
 
@@ -60,8 +63,6 @@ export default function LoginFormComponent() {
               autoFocus
               type="email"
               id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
@@ -84,8 +85,6 @@ export default function LoginFormComponent() {
               })}
               type={"password"}
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               required
             />
