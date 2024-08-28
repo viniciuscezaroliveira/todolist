@@ -10,10 +10,13 @@
     "lint": "next lint",
     "test:frontend": "jest --config jest.client.config.ts",
     "test:backend": "jest --config jest.server.config.ts",
+    "test:backend:watch": "jest --watch --config jest.server.config.ts",
     "test:backend:coverage": "jest --config jest.server.config.ts --coverage"
   },
   "dependencies": {
     "@prisma/client": "^5.18.0",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
     "next": "14.2.6",
     "qs": "^6.13.0",
     "react": "^18",
@@ -24,6 +27,8 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20",
     "@types/qs": "^6.9.15",
     "@types/react": "^18",

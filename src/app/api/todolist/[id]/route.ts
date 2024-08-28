@@ -11,7 +11,7 @@ export async function PUT(
     const payload = await updateTodolistController(params.id, body);
     return Response.json(payload);
   } catch (error: any) {
-    return NextResponse.json(error.message, { status: 500 });
+    return NextResponse.json(error.message, { status: error.status || 500 });
   }
 }
 
@@ -23,6 +23,6 @@ export async function DELETE(
     await todoListDeleteController(params.id);
     return NextResponse.json({}, { status: 200 });
   } catch (error: any) {
-    return NextResponse.json(error.message, { status: 500 });
+    return NextResponse.json(error.message, { status: error.status || 500 });
   }
 }

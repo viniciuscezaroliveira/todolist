@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { UserGateway } from "../../frontend/infra/gateway/User.gateway";
 const userGateway = UserGateway.getInstance();
@@ -20,21 +20,23 @@ export default function CreateAccountFormComponent() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit: SubmitHandler<any> = (data) => {
-    userGateway
+  const onSubmit: SubmitHandler<any> = async (data) => {
+    await userGateway
       .createAccount(data)
       .then(() => {
         gotoLoginPage();
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
+        alert(error);
       });
   };
 
-  function onChangePass(event) {
+  function onChangePass(event: any) {
     setPass(event.target.value);
   }
-  function onChangeConfirmPass(event) {
+
+  function onChangeConfirmPass(event: any) {
     setConfirmPass(event.target.value);
   }
 
@@ -163,10 +165,10 @@ export default function CreateAccountFormComponent() {
             </button>
             <button
               type="button"
-              className="w-full px-4 py-2 font-bold text-white bg-red-600 rounded-md hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+              className="w-full bg-transparent border border-gray-900 hover:bg-gray-700 text-black hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={gotoLoginPage}
             >
-              Cancel
+              Login
             </button>
           </div>
         </form>

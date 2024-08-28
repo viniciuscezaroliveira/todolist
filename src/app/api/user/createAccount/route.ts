@@ -7,6 +7,6 @@ export async function POST(req: NextRequest) {
     const payload = await userCreateAccountController(body);
     return Response.json(payload);
   } catch (error: any) {
-    return NextResponse.json(error.message, { status: 500 });
+    return NextResponse.json(error.message, { status: error.status || 500 });
   }
 }

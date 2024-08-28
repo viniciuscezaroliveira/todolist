@@ -22,37 +22,42 @@ export class FetchAdapter implements IHttpClient {
   }
   async get(url: string): Promise<any> {
     url = `${this.baseUrl}/${url}`;
-    const response = await fetch(url);
-    return response.json();
+    return await this.execute(url, "get");
   }
   async post(url: string, body: any): Promise<any> {
     url = `${this.baseUrl}/${url}`;
-    const response = await fetch(url, {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    return response.json();
+    return await this.execute(url, "post", body);
   }
   async delete(url: string): Promise<any> {
     url = `${this.baseUrl}/${url}`;
-    await fetch(url, {
-      method: "delete",
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    return await this.execute(url, "delete");
   }
   async put(url: string, body: any): Promise<any> {
     url = `${this.baseUrl}/${url}`;
-    await fetch(url, {
-      method: "put",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(body),
+    return await this.execute(url, "put", body);
+  }
+
+  private async execute(
+    url: string,
+    method: "get" | "post" | "put" | "delete",
+    body?: any
+  ) {
+    return await new Promise(async (resolve, reject) => {
+      const config: { [key: string]: any } = {
+        method: method,
+        headers: {
+          "content-type": "application/json",
+        },
+      };
+      if (method === "post" || method === "put") {
+        config["body"] = JSON.stringify(body);
+      }
+      const response = await fetch(url, config);
+      if (!response.ok) {
+        const errorData = await response.json();
+        return reject(errorData);
+      }
+      return resolve(response.json());
     });
   }
 }

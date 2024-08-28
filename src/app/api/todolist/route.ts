@@ -1,9 +1,12 @@
+import { appContext } from "@/backend/infra/middlewares/auth";
 import { todoListCreateController } from "@/backend/presentation/controllers/todolist/create.controller";
 import { getTodolistController } from "@/backend/presentation/controllers/todolist/get.controller";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
+    await appContext(req);
+
     const filter = queryToObject(req.nextUrl.search);
     if (filter.completed !== undefined) {
       filter.completed = (filter.completed === "true") as any;
@@ -11,7 +14,7 @@ export async function GET(req: NextRequest) {
     const payload = await getTodolistController(filter);
     return Response.json(payload);
   } catch (error: any) {
-    return NextResponse.json(error.message, { status: 500 });
+    return NextResponse.json(error.message, { status: error?.status || 500 });
   }
 }
 
@@ -21,7 +24,7 @@ export async function POST(req: NextRequest) {
     const payload = await todoListCreateController(body);
     return Response.json(payload);
   } catch (error: any) {
-    return NextResponse.json(error.message, { status: 500 });
+    return NextResponse.json(error.message, { status: error.status || 500 });
   }
 }
 

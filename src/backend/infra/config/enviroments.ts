@@ -1,0 +1,4 @@
+export const config = {
+  AUTH_TOKEN_SECRET: process.env.NEXT_PUBLIC_AUTH_TOKEN_SECRET,
+  AUTH_TOKEN_EXPIRES_IN: process.env.NEXT_PUBLIC_AUTH_TOKEN_EXPIRES_IN,
+};
