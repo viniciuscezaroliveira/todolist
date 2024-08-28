@@ -1,3 +1,5 @@
+import { CONFIG } from "@/frontend/infra/config/enviroments";
+import { setCookie } from "@/frontend/infra/cookies/set";
 import { UserGateway } from "@/frontend/infra/gateway/User.gateway";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -21,14 +23,21 @@ export default function LoginFormComponent() {
   } = useForm();
 
   const onSubmit: SubmitHandler<any> = async (data) => {
-    await userGateway.login(data.email, data.password);
-    // .then(() => {
-    //   gotoLoginPage();
-    // })
-    // .catch((error) => {
-    //   console.error(error);
-    //   alert(error);
-    // });
+    const token: string | null = await userGateway
+      .login(data.email, data.password)
+      .catch((error) => {
+        console.error(error);
+        alert(error);
+        return null;
+      });
+
+    if (token) {
+      const date = new Date();
+      date.setDate(date.getDate() + 1);
+      setCookie(CONFIG.cookieTokenName!, token, date);
+      const user = await userGateway.me();
+      // router.push("/");
+    }
   };
 
   return (

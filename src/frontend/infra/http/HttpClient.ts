@@ -1,4 +1,6 @@
 import { CONFIG } from "../config/enviroments";
+import { eraseCookie } from "../cookies/erase";
+import { getCookie } from "../cookies/get";
 
 export default interface IHttpClient {
   get(url: string): Promise<any>;
@@ -43,17 +45,26 @@ export class FetchAdapter implements IHttpClient {
     body?: any
   ) {
     return await new Promise(async (resolve, reject) => {
-      const config: { [key: string]: any } = {
+      const token = getCookie(CONFIG.cookieTokenName!);
+
+      const configRequest: { [key: string]: any } = {
         method: method,
         headers: {
           "content-type": "application/json",
         },
       };
-      if (method === "post" || method === "put") {
-        config["body"] = JSON.stringify(body);
+      if (token) {
+        configRequest["headers"]["Authorization"] = `Bearer ${token}`;
       }
-      const response = await fetch(url, config);
+      if (method === "post" || method === "put") {
+        configRequest["body"] = JSON.stringify(body);
+      }
+      const response = await fetch(url, configRequest);
       if (!response.ok) {
+        if (response.status === 401) {
+          eraseCookie(CONFIG.cookieTokenName!);
+          return reject("Unauthorized");
+        }
         const errorData = await response.json();
         return reject(errorData);
       }
