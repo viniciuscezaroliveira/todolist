@@ -9,6 +9,7 @@ export class UserCreateAccountUsecase {
       const user = new UserEntity(data.name, data.email, data.password)
         .validateInitialPassword()
         .setEncriptyPassword();
+      console.log({ user });
       await this.userCreateRepository.execute(user);
       return user;
     } catch (error) {

@@ -1,27 +1,44 @@
 import { TodoListEntity } from "@/backend/domain/entities/todolist.entity";
+import { UserEntity } from "@/backend/domain/entities/User.entity";
 import { TodoListGetRepository } from "@/backend/infra/repositories/todolist/Get.repository";
-import { TodoListUpdateRepository } from "@/backend/infra/repositories/todolist/Update.repository";
+import { TodoListUpdateRepository } from "@/backend/infra/repositories/todolist/update.repository";
+
 import { afterAll, beforeAll, describe, expect, test } from "@jest/globals";
 import { PrismaClient } from "@prisma/client";
-import { TodoListUpdateUsecase } from "../Update.usecase";
+import { TodoListUpdateUsecase } from "../update.usecase";
 
 let db: PrismaClient;
+let user: UserEntity;
 beforeAll(async () => {
   await new Promise((resolve) =>
     setTimeout(async () => {
       db = new PrismaClient();
+      const userEntity = new UserEntity(
+        "test update",
+        "test@testupdate.com",
+        "123456"
+      ).setEncriptyPassword();
+      user = (await db.user.create({ data: userEntity })) as any;
+
       await db.todolist.create({
-        data: { title: "test jest ", completed: false, isDeleted: false },
+        data: {
+          title: "test update",
+          userId: user.id!,
+          completed: false,
+          isDeleted: false,
+        },
       });
       resolve(null);
-    }, 1000)
+    }, 2000)
   );
 });
 
 afterAll(async () => {
-  db = new PrismaClient();
   await db.todolist.deleteMany({
-    where: { title: { contains: "jest" } },
+    where: { title: { contains: "test update" } },
+  });
+  await db.user.deleteMany({
+    where: { email: "test@testupdate.com" },
   });
 });
 
@@ -37,20 +54,20 @@ describe("TodoListUpdateUsecase", () => {
 
     // Act
     const todoList: TodoListEntity[] = await todoListGetRepository.execute({
-      title: { contains: "test jest" },
+      title: { contains: "test update" },
     });
 
     // Assert
     expect(todoList.length).not.toBe(0);
     if (todoList.length) {
       const [firstTodo] = todoList;
-      firstTodo.title = "test jest updated";
+      firstTodo.title = "test updated";
       await useCase.execute(firstTodo.id!, firstTodo);
       const todoListUpdated: TodoListEntity[] =
         await todoListGetRepository.execute({
-          title: { contains: "test jest" },
+          title: { contains: "test update" },
         });
-      expect(todoListUpdated[0].title).toEqual("test jest updated");
+      expect(todoListUpdated[0].title).toEqual("test updated");
     }
   });
 
@@ -64,7 +81,7 @@ describe("TodoListUpdateUsecase", () => {
     );
 
     const todoList: TodoListEntity[] = await todoListGetRepository.execute({
-      title: { contains: "test jest" },
+      title: { contains: "test update" },
     });
 
     expect(todoList).toBeDefined();
@@ -76,7 +93,7 @@ describe("TodoListUpdateUsecase", () => {
 
     const todoListUpdated: TodoListEntity[] =
       await todoListGetRepository.execute({
-        title: { contains: "test jest" },
+        title: { contains: "test update" },
       });
 
     // Assert
@@ -96,6 +113,7 @@ describe("TodoListUpdateUsecase", () => {
     const fakeData: TodoListEntity = new TodoListEntity({
       title: "data fake",
       completed: false,
+      userId: user.id!,
       isDeleted: false,
       id: "6e1aebfd-6aab-4690-9db1-b14e8a0c545c",
     });

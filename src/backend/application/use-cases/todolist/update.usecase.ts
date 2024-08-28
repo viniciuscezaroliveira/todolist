@@ -11,6 +11,7 @@ export class TodoListUpdateUsecase {
   async execute(id: string, data: Partial<TodoListEntity>): Promise<void> {
     const todo = await this.todoListGetRepository.execute({
       id,
+      userId: data.userId,
     });
     if (!todo?.length) throw new Error("todo not found");
     const [firstRegister] = todo;

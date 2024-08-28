@@ -18,7 +18,7 @@ const TodoList = () => {
   const [deleteTodoId, setDeleteTodoId] = useState<string>("");
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [filter, setFilter] = useState<boolean | undefined>(undefined);
-  const { state, dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext)!;
 
   const load = async (completed?: boolean) => {
     completed = completed ?? filter;
@@ -90,10 +90,8 @@ const TodoList = () => {
   }, [filter]);
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-2 ">
-      <h1 className="text-2xl font-bold mb-4 text-center">
-        To-do List - {state.name}
-      </h1>
+    <div className="max-w-md mx-auto mt-24 p-2 ">
+      <h1 className="text-2xl font-bold mb-4 text-center">To-do List</h1>
       <div className="flex mb-4">
         <input
           type="text"

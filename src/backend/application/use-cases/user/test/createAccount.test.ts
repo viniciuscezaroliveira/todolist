@@ -12,7 +12,7 @@ beforeAll(async () => {
       db = new PrismaClient();
       await db.user.deleteMany({
         where: {
-          name: { contains: "test" },
+          name: { contains: "test create account" },
         },
       });
       resolve(null);
@@ -40,7 +40,7 @@ describe("Create account tests", () => {
     // arrange
     const data = {
       email: "test@test.com",
-      name: "test",
+      name: "test create account",
       password: "123456",
     };
     // act
@@ -48,7 +48,7 @@ describe("Create account tests", () => {
     const useCase = new UserCreateAccountUsecase(userCreateRepository);
     const user = await useCase.execute(data);
     // assert
-    expect(data).toBeDefined();
+    expect(user).toBeDefined();
   });
   test("should be password length", async () => {
     // arrange
@@ -61,12 +61,12 @@ describe("Create account tests", () => {
     // assert
     const useCase = new UserCreateAccountUsecase(userCreateRepository);
     await expect(useCase.execute(data)).rejects.toThrow(
-      "Valid password is required"
+      "Error creating account - Checking your data"
     );
 
     data.password = "1234567891011121315151617181920";
     await expect(useCase.execute(data)).rejects.toThrow(
-      "Valid password is required"
+      "Error creating account - Checking your data"
     );
   });
   test("should be name length", async () => {
@@ -80,17 +80,17 @@ describe("Create account tests", () => {
     // assert
     const useCase = new UserCreateAccountUsecase(userCreateRepository);
     await expect(useCase.execute(data)).rejects.toThrow(
-      "Valid name is required"
+      "Error creating account - Checking your data"
     );
 
     data.name = "Is example name for test usecase  - 20 characters";
     await expect(useCase.execute(data)).rejects.toThrow(
-      "Valid name is required"
+      "Error creating account - Checking your data"
     );
 
     data.name = "test@name.com.br";
     await expect(useCase.execute(data)).rejects.toThrow(
-      "Valid name is required"
+      "Error creating account - Checking your data"
     );
   });
 
@@ -105,12 +105,12 @@ describe("Create account tests", () => {
     // assert
     const useCase = new UserCreateAccountUsecase(userCreateRepository);
     await expect(useCase.execute(data)).rejects.toThrow(
-      "Valid name is required"
+      "Error creating account - Checking your data"
     );
 
     data.name = "Is example name for test usecase  - 20 characters";
     await expect(useCase.execute(data)).rejects.toThrow(
-      "Valid name is required"
+      "Error creating account - Checking your data"
     );
   });
 
@@ -125,7 +125,7 @@ describe("Create account tests", () => {
     // assert
     const useCase = new UserCreateAccountUsecase(userCreateRepository);
     await expect(useCase.execute(data)).rejects.toThrow(
-      "Valid email is required"
+      "Error creating account - Checking your data"
     );
   });
 
@@ -133,12 +133,13 @@ describe("Create account tests", () => {
     // arrange
     const data = {
       email: "test@testpassword.com",
-      name: "test",
+      name: "test jest",
       password: "123456",
     };
     // act
     const useCase = new UserCreateAccountUsecase(userCreateRepository);
-    const user = (await useCase.execute(data)).setEncriptyPassword();
+    const user = await useCase.execute(data);
+
     // assert
     expect(user.password).not.toBe(data.password);
   });
@@ -147,17 +148,15 @@ describe("Create account tests", () => {
     // arrange
     const data = {
       email: "test@testcomparepassword.com",
-      name: "test",
+      name: "test jest",
       password: "123456",
     };
-    const userEntity = new UserEntity(
-      data.name,
-      data.email,
-      data.password
-    ).setEncriptyPassword();
+    const userEntity = new UserEntity(data.name, data.email, data.password)
+      .validateInitialPassword()
+      .setEncriptyPassword();
     // act
     const useCase = new UserCreateAccountUsecase(userCreateRepository);
-    const user = (await useCase.execute(data)).setEncriptyPassword();
+    const user = await useCase.execute(data);
     // assert
     expect(user.password).not.toBe(data.password);
     expect(userEntity.comparePassword("123456")).toBe(true);

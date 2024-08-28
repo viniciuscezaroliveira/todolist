@@ -1,3 +1,7 @@
 export class TodoListDTO {
-  constructor(public title: string, public id?: number) {}
+  constructor(
+    public title: string,
+    public userId: string,
+    public id?: number
+  ) {}
 }

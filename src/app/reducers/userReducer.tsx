@@ -1,8 +1,10 @@
 import { User } from "@/frontend/domain/user/User";
+import { CONFIG } from "@/frontend/infra/config/enviroments";
+import { eraseCookie } from "@/frontend/infra/cookies/erase";
 
 // userReducer.tsx
 
-type Action = { type: "SET_USER"; payload: User } | { type: "CLEAR_USER" };
+type Action = { type: "SET_USER"; payload: User } | { type: "LOGOUT" };
 
 export const initialState: User = {
   id: "",
@@ -19,7 +21,9 @@ export function userReducer(state: User, action: Action): User {
         name: action.payload.name,
         email: action.payload.email,
       };
-    case "CLEAR_USER":
+    case "LOGOUT":
+      eraseCookie(CONFIG.cookieTokenName!);
+      location.href = "/login";
       return initialState;
     default:
       return state;

@@ -15,10 +15,11 @@ export class TodoListGetUsecase {
 
   private predicate(filter?: Partial<TodoListEntity>) {
     if (!filter) return {};
-    let { title, completed } = filter;
+    let { title, completed, userId } = filter;
 
     return {
       title: title || undefined,
+      userId: userId,
       completed: completed,
     };
   }

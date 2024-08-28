@@ -8,6 +8,7 @@ export class TodoListCreateUsecase {
   async execute(data: TodoListDTO): Promise<TodoListEntity> {
     const entity = new TodoListEntity({
       title: data.title,
+      userId: data.userId,
     });
     const payload = await this.repository.execute(entity);
     return payload;

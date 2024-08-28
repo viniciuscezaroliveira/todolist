@@ -6,7 +6,7 @@ export function jwtSign(payload: any, expiresIn?: string | number | null) {
   });
 }
 
-export function jwtVerify(token: string) {
+export function jwtVerify(token: string): any {
   try {
     const payload: unknown = jwt.verify(
       token,
