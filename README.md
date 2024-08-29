@@ -18,7 +18,7 @@
 
 - To start the development server, use:
   ```bash
-      npm run dev
+   npm run dev
   ```
 - The application will be available at http://localhost:3000.
 
@@ -29,7 +29,7 @@
 - To open Cypress and run end-to-end tests, use the following command:
 
   ```bash
-     npm run cypress:open
+   npm run cypress:open
   ```
 
 ## Testing with Jest
@@ -37,5 +37,5 @@
 - To run integration tests, use the following command:
 
   ```bash
-     npm run test:coverage
+   npm run test:coverage
   ```
