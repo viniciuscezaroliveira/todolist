@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prepare": "prisma migrate deploy",
-    "dev": "next dev --port 3005",
+    "prepare": "prisma migrate deploy && prisma db push && npm run test:backend ",
+    "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test:frontend": "jest --config jest.client.config.ts",
     "test:backend": "jest --config jest.server.config.ts",
     "test:backend:watch": "jest --watch --config jest.server.config.ts",
-    "test:backend:coverage": "jest --config jest.server.config.ts --coverage"
+    "test:backend:coverage": "jest --config jest.server.config.ts --coverage",
+    "cypress:open": "next dev --port 3001 && cypress open"
   },
   "dependencies": {
     "@prisma/client": "^5.18.0",
@@ -33,6 +34,7 @@
     "@types/qs": "^6.9.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.14.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
     "jest": "^29.7.0",

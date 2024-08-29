@@ -100,6 +100,7 @@ const TodoList = () => {
           className="flex-grow p-2 border border-gray-300 rounded-l"
           placeholder="Add new task"
           onKeyDown={(e) => e.key === "Enter" && addTodo()}
+          id="title-task"
           autoFocus
         />
         <button
@@ -108,6 +109,7 @@ const TodoList = () => {
             !input.trim() ? "bg-gray-300 hover:bg-gray-300" : ""
           }`}
           disabled={!input.trim()}
+          id="add-task"
         >
           Add
         </button>
@@ -133,23 +135,23 @@ const TodoList = () => {
             >
               {todo.title}
             </span>
-            <button
-              onClick={() =>
-                todo.completed
-                  ? toggleNotComplete(todo.id!)
-                  : toggleComplete(todo.id!)
-              }
-              className={`text-white p-1 rounded ml-2
-                ${
-                  todo.completed
-                    ? "bg-purple-500  hover:bg-purple-600 "
-                    : "bg-green-500  hover:bg-green-600"
-                } 
-                  `}
-              test-id="btn-completed"
-            >
-              {todo.completed ? "Not done" : "Done"}
-            </button>
+            {(!todo.completed && (
+              <button
+                onClick={() => toggleComplete(todo.id!)}
+                className="text-white p-1 rounded ml-2 bg-green-500  hover:bg-green-600"
+                id="btn-completed"
+              >
+                {"Done"}
+              </button>
+            )) || (
+              <button
+                onClick={() => toggleNotComplete(todo.id!)}
+                className="text-white p-1 rounded ml-2 bg-purple-500  hover:bg-purple-600 "
+                id="btn-not-completed"
+              >
+                {"Not done"}
+              </button>
+            )}
             <button
               onClick={() => handleConfirmationDelete(todo.id!)}
               className="bg-red-500 text-white p-1 rounded hover:bg-red-600 ml-2"

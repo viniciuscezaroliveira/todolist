@@ -3,7 +3,7 @@ import { User } from "@/frontend/domain/user/User";
 import { CONFIG } from "@/frontend/infra/config/enviroments";
 import { getCookie } from "@/frontend/infra/cookies/get";
 import { UserGateway } from "@/frontend/infra/gateway/User.gateway";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import React, { createContext, ReactNode, useEffect, useReducer } from "react";
 import { initialState, userReducer } from "../reducers/userReducer";
 

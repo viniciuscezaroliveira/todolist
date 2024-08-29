@@ -2,7 +2,7 @@ import { CONFIG } from "@/frontend/infra/config/enviroments";
 import { setCookie } from "@/frontend/infra/cookies/set";
 import { UserGateway } from "@/frontend/infra/gateway/User.gateway";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { UserContext } from "../providers/userContext";
