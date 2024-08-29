@@ -31,10 +31,10 @@ describe('Navigation', () => {
       cy.get("#add-task").click()
       cy.get('span').contains('new todo for cypress')
       cy.get("#btn-completed").click()
-      
+      cy.wait(2000);
       //filter
       cy.get("#filter-options").select("Not Completed")
-      cy.wait(2000);
+      cy.wait(3000);
       cy.get('span').should('not.contain', 'new todo for cypress');
       cy.get("#filter-options").select("Completed")
       cy.wait(2000);

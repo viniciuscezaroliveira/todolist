@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prepare": "prisma migrate deploy && prisma db push && npm run test:backend ",
+    "prepare": "prisma migrate deploy && prisma db push && npm run test:coverage ",
     "dev": "next dev --port 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:backend": "jest --config jest.server.config.ts",
-    "test:backend:watch": "jest --watch --config jest.server.config.ts",
-    "test:backend:coverage": "jest --config jest.server.config.ts --coverage",
+    "test": "jest --config jest.server.config.ts",
+    "test:watch": "jest --watch --config jest.server.config.ts",
+    "test:coverage": "jest --config jest.server.config.ts --coverage",
     "cypress:open": "cypress open"
   },
   "dependencies": {
