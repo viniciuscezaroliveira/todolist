@@ -1,7 +1,6 @@
 import { CONFIG } from "@/frontend/infra/config/enviroments";
 import { setCookie } from "@/frontend/infra/cookies/set";
 import { UserGateway } from "@/frontend/infra/gateway/User.gateway";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -93,14 +92,6 @@ export default function LoginFormComponent() {
                 Please enter a valid password.
               </p>
             )}
-            <div className="flex justify-end">
-              <Link
-                href={"/forgot"}
-                className="text-sm mt-1 hover:underline text-blue-600"
-              >
-                Forgot password?
-              </Link>
-            </div>
           </div>
           <div className="flex items-center justify-between">
             <button
