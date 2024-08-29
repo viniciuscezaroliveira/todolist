@@ -2,6 +2,7 @@ import { jwtVerify } from "@/backend/infra/jwt/jwt";
 import { appContext } from "@/backend/infra/middlewares/auth";
 import { todoListCreateController } from "@/backend/presentation/controllers/todolist/create.controller";
 import { getTodolistController } from "@/backend/presentation/controllers/todolist/get.controller";
+import { queryToObject } from "@/frontend/application/services/queryToObject";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -35,13 +36,4 @@ export async function POST(req: NextRequest) {
   } catch (error: any) {
     return NextResponse.json(error.message, { status: error.status || 500 });
   }
-}
-
-export function queryToObject(query: string): { [key: string]: string } {
-  const obj: { [key: string]: any } = {};
-  const queryString = new URLSearchParams(query);
-  queryString.forEach((value, key) => {
-    obj[key] = value;
-  });
-  return obj;
 }

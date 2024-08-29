@@ -1,4 +1,4 @@
-import { TodoList } from "../../todolist/TodoList";
+import { TodoList } from "@/frontend/domain/todolist/TodoList";
 import IHttpClient, { FetchAdapter } from "../http/HttpClient";
 
 export interface ITodoListGateway {

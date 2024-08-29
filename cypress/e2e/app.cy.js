@@ -2,7 +2,7 @@ describe('Navigation', () => {
     it('should login page', () => {
       const sufixEmailRandom = Math.floor(Math.random() * 1000)
       const email = `cypress.${sufixEmailRandom}@cypress.com`
-      cy.visit('http://localhost:3001/')
+      cy.visit('http://localhost:3000/')
       //create account
       cy.contains('button', 'Create account').click();
       cy.url().should('contain', '/create-account');

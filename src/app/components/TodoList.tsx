@@ -2,8 +2,7 @@
 
 import { TodoList as TodoListEntity } from "@/frontend/domain/todolist/TodoList";
 import { TodoListGateway } from "@/frontend/infra/gateway/TodoList.gateway";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../providers/userContext";
+import { useEffect, useState } from "react";
 import { ConfirmDelete } from "./ConfirmDelete";
 import EditTodo from "./EditTodo";
 import Filter from "./Filter";
@@ -18,7 +17,6 @@ const TodoList = () => {
   const [deleteTodoId, setDeleteTodoId] = useState<string>("");
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [filter, setFilter] = useState<boolean | undefined>(undefined);
-  const { state, dispatch } = useContext(UserContext)!;
 
   const load = async (completed?: boolean) => {
     completed = completed ?? filter;
