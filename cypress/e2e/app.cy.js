@@ -1,4 +1,9 @@
 describe('Navigation', () => {
+
+  after(() => {
+    cy.log('Tests finish');
+  });
+
     it('should login page', () => {
       const sufixEmailRandom = Math.floor(Math.random() * 1000)
       const email = `cypress.${sufixEmailRandom}@cypress.com`
@@ -29,14 +34,17 @@ describe('Navigation', () => {
       
       //filter
       cy.get("#filter-options").select("Not Completed")
+      cy.wait(2000);
       cy.get('span').should('not.contain', 'new todo for cypress');
       cy.get("#filter-options").select("Completed")
+      cy.wait(2000);
       cy.get('span').contains('new todo for cypress')
   
       //user info
       cy.get('span').contains(email)
       cy.get('span').contains("cypress")
       cy.get("#logout").click()
+      cy.wait(2000);
       cy.url().should('contain', '/login');
     
     })
