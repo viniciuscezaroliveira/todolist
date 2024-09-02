@@ -33,6 +33,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
         });
       }
       router.push("/todo-list");
+    } else {
+      router.push("/login");
     }
   };
 

@@ -63,6 +63,8 @@ export class FetchAdapter implements IHttpClient {
       if (!response.ok) {
         if (response.status === 401) {
           eraseCookie(CONFIG.cookieTokenName!);
+          alert("Unauthorized");
+          window.location.href = "/login";
           return reject("Unauthorized");
         }
         const errorData = await response.json();
